@@ -11,7 +11,38 @@
 		4ACE95DA2629358F00A96237 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACE95D92629358F00A96237 /* ContentView.swift */; };
 		4ACE95DC2629359500A96237 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4ACE95DB2629359500A96237 /* Assets.xcassets */; };
 		4ACE95DF2629359500A96237 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4ACE95DE2629359500A96237 /* Preview Assets.xcassets */; };
+		4ACE95F02629371600A96237 /* PenballLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 4ACE95EE2629371600A96237 /* PenballLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4ACE95F32629371600A96237 /* PenballLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ACE95EC2629371600A96237 /* PenballLib.framework */; };
+		4ACE95F42629371600A96237 /* PenballLib.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4ACE95EC2629371600A96237 /* PenballLib.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4ACE95FB2629377700A96237 /* PenballView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACE95FA2629377700A96237 /* PenballView.swift */; };
+		4ACE96032629454900A96237 /* PenballSpriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACE96022629454900A96237 /* PenballSpriteView.swift */; };
+		4ACE9606262945C200A96237 /* PenballScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACE9605262945C200A96237 /* PenballScene.swift */; };
+		4ACE9609262946CD00A96237 /* PenballCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACE9608262946CD00A96237 /* PenballCanvasView.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4ACE95F12629371600A96237 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4ACE95CC2629358F00A96237 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4ACE95EB2629371600A96237;
+			remoteInfo = PenballLib;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4ACE95F82629371600A96237 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4ACE95F42629371600A96237 /* PenballLib.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4ACE95D42629358F00A96237 /* Penball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Penball.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -20,10 +51,25 @@
 		4ACE95DB2629359500A96237 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4ACE95DE2629359500A96237 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		4ACE95E02629359500A96237 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4ACE95EC2629371600A96237 /* PenballLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PenballLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4ACE95EE2629371600A96237 /* PenballLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PenballLib.h; sourceTree = "<group>"; };
+		4ACE95EF2629371600A96237 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4ACE95FA2629377700A96237 /* PenballView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenballView.swift; sourceTree = "<group>"; };
+		4ACE96022629454900A96237 /* PenballSpriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenballSpriteView.swift; sourceTree = "<group>"; };
+		4ACE9605262945C200A96237 /* PenballScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenballScene.swift; sourceTree = "<group>"; };
+		4ACE9608262946CD00A96237 /* PenballCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenballCanvasView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		4ACE95D12629358F00A96237 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4ACE95F32629371600A96237 /* PenballLib.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4ACE95E92629371600A96237 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -37,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				4ACE95D62629358F00A96237 /* Penball */,
+				4ACE95ED2629371600A96237 /* PenballLib */,
 				4ACE95D52629358F00A96237 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -45,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				4ACE95D42629358F00A96237 /* Penball.app */,
+				4ACE95EC2629371600A96237 /* PenballLib.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -69,7 +117,31 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		4ACE95ED2629371600A96237 /* PenballLib */ = {
+			isa = PBXGroup;
+			children = (
+				4ACE95EE2629371600A96237 /* PenballLib.h */,
+				4ACE95FA2629377700A96237 /* PenballView.swift */,
+				4ACE9608262946CD00A96237 /* PenballCanvasView.swift */,
+				4ACE96022629454900A96237 /* PenballSpriteView.swift */,
+				4ACE9605262945C200A96237 /* PenballScene.swift */,
+				4ACE95EF2629371600A96237 /* Info.plist */,
+			);
+			path = PenballLib;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		4ACE95E72629371600A96237 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4ACE95F02629371600A96237 /* PenballLib.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		4ACE95D32629358F00A96237 /* Penball */ = {
@@ -79,15 +151,35 @@
 				4ACE95D02629358F00A96237 /* Sources */,
 				4ACE95D12629358F00A96237 /* Frameworks */,
 				4ACE95D22629358F00A96237 /* Resources */,
+				4ACE95F82629371600A96237 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				4ACE95F22629371600A96237 /* PBXTargetDependency */,
 			);
 			name = Penball;
 			productName = Penball;
 			productReference = 4ACE95D42629358F00A96237 /* Penball.app */;
 			productType = "com.apple.product-type.application";
+		};
+		4ACE95EB2629371600A96237 /* PenballLib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4ACE95F52629371600A96237 /* Build configuration list for PBXNativeTarget "PenballLib" */;
+			buildPhases = (
+				4ACE95E72629371600A96237 /* Headers */,
+				4ACE95E82629371600A96237 /* Sources */,
+				4ACE95E92629371600A96237 /* Frameworks */,
+				4ACE95EA2629371600A96237 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PenballLib;
+			productName = PenballLib;
+			productReference = 4ACE95EC2629371600A96237 /* PenballLib.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -100,6 +192,10 @@
 				TargetAttributes = {
 					4ACE95D32629358F00A96237 = {
 						CreatedOnToolsVersion = 12.4;
+					};
+					4ACE95EB2629371600A96237 = {
+						CreatedOnToolsVersion = 12.4;
+						LastSwiftMigration = 1240;
 					};
 				};
 			};
@@ -117,6 +213,7 @@
 			projectRoot = "";
 			targets = (
 				4ACE95D32629358F00A96237 /* Penball */,
+				4ACE95EB2629371600A96237 /* PenballLib */,
 			);
 		};
 /* End PBXProject section */
@@ -128,6 +225,13 @@
 			files = (
 				4ACE95DF2629359500A96237 /* Preview Assets.xcassets in Resources */,
 				4ACE95DC2629359500A96237 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4ACE95EA2629371600A96237 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,7 +247,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4ACE95E82629371600A96237 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4ACE96032629454900A96237 /* PenballSpriteView.swift in Sources */,
+				4ACE95FB2629377700A96237 /* PenballView.swift in Sources */,
+				4ACE9606262945C200A96237 /* PenballScene.swift in Sources */,
+				4ACE9609262946CD00A96237 /* PenballCanvasView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4ACE95F22629371600A96237 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4ACE95EB2629371600A96237 /* PenballLib */;
+			targetProxy = 4ACE95F12629371600A96237 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		4ACE95E12629359500A96237 /* Debug */ = {
@@ -265,14 +388,15 @@
 		4ACE95E42629359500A96237 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Penball/Preview Content\"";
-				DEVELOPMENT_TEAM = 9DDM72ZZ79;
+				DEVELOPMENT_TEAM = 9G475R3MEF;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Penball/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -287,14 +411,15 @@
 		4ACE95E52629359500A96237 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Penball/Preview Content\"";
-				DEVELOPMENT_TEAM = 9DDM72ZZ79;
+				DEVELOPMENT_TEAM = 9G475R3MEF;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Penball/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -303,6 +428,67 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		4ACE95F62629371600A96237 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 9G475R3MEF;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = PenballLib/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.anli.penball.PenballLib;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		4ACE95F72629371600A96237 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 9G475R3MEF;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = PenballLib/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.anli.penball.PenballLib;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -323,6 +509,15 @@
 			buildConfigurations = (
 				4ACE95E42629359500A96237 /* Debug */,
 				4ACE95E52629359500A96237 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4ACE95F52629371600A96237 /* Build configuration list for PBXNativeTarget "PenballLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4ACE95F62629371600A96237 /* Debug */,
+				4ACE95F72629371600A96237 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
