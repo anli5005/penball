@@ -10,6 +10,7 @@ import PencilKit
 
 struct PenballCanvasView: UIViewRepresentable {
     @Binding var strokes: [Double: PKStroke]
+    @Binding var tool: PKTool
     
     static let defaultTool = PKInkingTool(.pen, color: .init(white: 1, alpha: 0.7), width: 10)
     
@@ -20,7 +21,8 @@ struct PenballCanvasView: UIViewRepresentable {
     func makeUIView(context: Context) -> PKCanvasView {
         let view = PKCanvasView()
         view.backgroundColor = .clear
-        view.tool = PenballCanvasView.defaultTool
+        view.tool = tool
+        view.drawingPolicy = .anyInput
         
         context.coordinator.parent = self
         context.coordinator.canvasView = view
@@ -39,6 +41,7 @@ struct PenballCanvasView: UIViewRepresentable {
         context.coordinator.canvasView = view
         
         view.delegate = context.coordinator
+        view.tool = tool
         
         if let interaction = view.interactions.first(where: { $0 is UIPencilInteraction }) as? UIPencilInteraction {
             interaction.delegate = context.coordinator
@@ -54,12 +57,10 @@ struct PenballCanvasView: UIViewRepresentable {
         weak var canvasView: PKCanvasView?
         
         func pencilInteractionDidTap(_ interaction: UIPencilInteraction) {
-            if let canvasView = canvasView {
-                if canvasView.tool is PKEraserTool {
-                    canvasView.tool = PenballCanvasView.defaultTool
-                } else {
-                    canvasView.tool = PKEraserTool(.vector)
-                }
+            if parent.tool is PKEraserTool {
+                parent.tool = PenballCanvasView.defaultTool
+            } else {
+                parent.tool = PKEraserTool(.vector)
             }
         }
         

@@ -25,8 +25,8 @@ struct PenballSpriteView: UIViewRepresentable {
         view.showsDrawCount = true
         view.showsNodeCount = true
         view.showsQuadCount = true
-        view.showsPhysics = true
-        view.showsFields = true
+        // view.showsPhysics = true
+        // view.showsFields = true
         #endif
         
         return view

@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import PenballLib
 
 @main
 struct PenballApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            PenballView()
         }
     }
 }
