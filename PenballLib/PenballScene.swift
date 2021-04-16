@@ -17,7 +17,7 @@ class PenballScene: SKScene {
         super.sceneDidLoad()
         let radius: CGFloat = 20
         backgroundColor = .init(red: 0, green: 0.3, blue: 0.75, alpha: 1)
-        physicsWorld.gravity = CGVector(dx: 0, dy: -1)
+        physicsWorld.gravity = CGVector(dx: 0, dy: -3)
         circleNode = SKShapeNode(ellipseOf: CGSize(width: radius * 2, height: radius * 2))
         circleNode!.position = startPosition
         circleNode!.fillColor = .init(red: 0.8, green: 0.8, blue: 1, alpha: 1)
