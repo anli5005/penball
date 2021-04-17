@@ -8,7 +8,7 @@
 import SpriteKit
 import PencilKit
 
-class PenballScene: SKScene {
+class PenballSceneDelegate: SKScene {
     var startPosition = CGPoint(x: 500, y: 500)
     var circleNode: SKShapeNode?
     var strokeNodes = [Double: [SKNode]]()
@@ -56,18 +56,25 @@ class PenballScene: SKScene {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 guard let self = self else { return }
                 
-                let drawing = PKDrawing(strokes: [stroke])
-                var rects = [CGRect]()
-                var lastY = self.frame.minY
-                for y in splitY {
-                    if y > drawing.bounds.minY && y < drawing.bounds.maxY {
-                        rects.append(CGRect(x: self.frame.origin.x, y: lastY, width: self.frame.width, height: y - lastY))
-                        lastY = y
+                var drawings = [PKDrawing]()
+                var lastIndex = 0
+                for i in 1..<stroke.path.count {
+                    let a = stroke.path[i - 1].location.y
+                    let b = stroke.path[i].location.y
+                    let range = min(a, b)...max(a, b)
+                    if splitY.contains(where: { range.contains($0) }) {
+                        let path = PKStrokePath(controlPoints: stroke.path[lastIndex...i], creationDate: stroke.path.creationDate)
+                        drawings.append(PKDrawing(strokes: [PKStroke(ink: stroke.ink, path: path)]))
+                        lastIndex = i
                     }
                 }
-                rects.append(CGRect(x: self.frame.origin.x, y: lastY, width: self.frame.width, height: self.frame.maxY - lastY))
+                if stroke.path.count == 1 || lastIndex != stroke.path.endIndex - 1 {
+                    let path = PKStrokePath(controlPoints: stroke.path[lastIndex..<stroke.path.endIndex], creationDate: stroke.path.creationDate)
+                    drawings.append(PKDrawing(strokes: [PKStroke(ink: stroke.ink, path: path)]))
+                }
                 
-                let textures = rects.map { SKTexture(image: drawing.image(from: $0, scale: UIScreen.main.scale)) }
+                let rects = drawings.map { $0.bounds }
+                let textures = drawings.map { SKTexture(image: $0.image(from: $0.bounds, scale: UIScreen.main.scale)) }
                 let bodies = textures.map { SKPhysicsBody(texture: $0, alphaThreshold: 0.5, size: $0.size()) }
                 
                 DispatchQueue.main.async { [weak self] in

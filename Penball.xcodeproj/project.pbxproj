@@ -55,7 +55,7 @@
 		4ACE95EF2629371600A96237 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4ACE95FA2629377700A96237 /* PenballView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenballView.swift; sourceTree = "<group>"; };
 		4ACE96022629454900A96237 /* PenballSpriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenballSpriteView.swift; sourceTree = "<group>"; };
-		4ACE9605262945C200A96237 /* PenballScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenballScene.swift; sourceTree = "<group>"; };
+		4ACE9605262945C200A96237 /* PenballScene.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = PenballScene.swift; sourceTree = "<group>"; };
 		4ACE9608262946CD00A96237 /* PenballCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenballCanvasView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 

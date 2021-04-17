@@ -14,6 +14,7 @@ struct PenballSpriteView: UIViewRepresentable {
     
     func makeUIView(context: Context) -> SKView {
         let view = SKView()
+        view.preferredFramesPerSecond = 120
         
         let scene = PenballScene()
         scene.scaleMode = .resizeFill
