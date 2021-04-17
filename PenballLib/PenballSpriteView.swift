@@ -10,16 +10,25 @@ import SpriteKit
 import PencilKit
 
 struct PenballSpriteView: UIViewRepresentable {
+    var scene: PenballScene
     var strokes: [Double: PKStroke]
+    @Binding var state: PenballState
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(parent: self)
+    }
     
     func makeUIView(context: Context) -> SKView {
         let view = SKView()
         view.preferredFramesPerSecond = 120
         
-        let scene = PenballScene()
+        context.coordinator.parent = self
+        scene.penballDelegate = context.coordinator
+        scene.state = state
+        
         scene.scaleMode = .resizeFill
-        scene.updateStrokes(strokes)
         view.presentScene(scene)
+        scene.updateStrokes(strokes)
         
         #if DEBUG
         view.showsFPS = true
@@ -34,7 +43,26 @@ struct PenballSpriteView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: SKView, context: Context) {
-        let scene = uiView.scene as! PenballScene
+        context.coordinator.parent = self
+        scene.penballDelegate = context.coordinator
+        scene.state = state
+
+        if uiView.scene !== scene {
+            scene.scaleMode = .resizeFill
+            uiView.presentScene(scene)
+        }
         scene.updateStrokes(strokes)
+    }
+    
+    class Coordinator: PenballSceneDelegate {
+        var parent: PenballSpriteView
+        
+        init(parent: PenballSpriteView) {
+            self.parent = parent
+        }
+        
+        func changeState(to state: PenballState) {
+            parent.state = state
+        }
     }
 }

@@ -8,34 +8,128 @@
 import SpriteKit
 import PencilKit
 
-class PenballSceneDelegate: SKScene {
-    var startPosition = CGPoint(x: 500, y: 500)
-    var circleNode: SKShapeNode?
-    var strokeNodes = [Double: [SKNode]]()
+extension Optional where Wrapped == NSMutableDictionary {
+    func getColor() -> UIColor {
+        let r = (self?[PenballScene.redKey] as? CGFloat) ?? 0
+        let g = (self?[PenballScene.greenKey] as? CGFloat) ?? 0
+        let b = (self?[PenballScene.blueKey] as? CGFloat) ?? 0
+        return UIColor(red: r, green: g, blue: b, alpha: 1)
+    }
+}
+
+extension SKNode {
+    var ballID: Int? {
+        userData?[PenballScene.ballKey] as? Int
+    }
+}
+
+extension PenballObjectType {
+    static let ballContactTest: PenballObjectType = [.finish, .hazard]
+}
+
+public class PenballScene: SKScene, SKPhysicsContactDelegate {
+    static let startNodeName = "Start"
+    static let finishNodeName = "Finish"
     
-    override func sceneDidLoad() {
-        super.sceneDidLoad()
-        let radius: CGFloat = 20
-        backgroundColor = .black
-        physicsWorld.gravity = CGVector(dx: 0, dy: -3)
-        circleNode = SKShapeNode(ellipseOf: CGSize(width: radius * 2, height: radius * 2))
-        circleNode!.position = startPosition
-        circleNode!.fillColor = .white
-        circleNode!.physicsBody = SKPhysicsBody(circleOfRadius: radius)
-        addChild(circleNode!)
+    static let redKey = "red"
+    static let greenKey = "green"
+    static let blueKey = "blue"
+    static let ballKey = "ball"
+    
+    weak var penballDelegate: PenballSceneDelegate?
+    var state = PenballState.notStarted {
+        didSet {
+            if state != oldValue {
+                stateDidChange()
+            }
+        }
     }
     
-    override func update(_ currentTime: TimeInterval) {
-        if !circleNode!.frame.intersects(frame) {
-            circleNode!.position = startPosition
-            circleNode!.physicsBody!.velocity = .zero
+    var ballNodes = [Int: SKShapeNode]()
+    var finishNodes = [Int: SKShapeNode]()
+    var startingConfigurations = [Int: (CGPoint, UIColor)]()
+    var strokeNodes = [Double: [SKNode]]()
+    var completedBalls = Set<Int>()
+    
+    let radius: CGFloat = 20
+    let lineWidth: CGFloat = 5
+    
+    static let ballZ: CGFloat = 1000
+    
+    public override func sceneDidLoad() {
+        super.sceneDidLoad()
+        
+        physicsWorld.contactDelegate = self
+                
+        backgroundColor = .black
+        
+        enumerateChildNodes(withName: PenballScene.startNodeName, using: { node, _ in
+            self.startingConfigurations[node.ballID ?? 0] = (node.position, node.userData.getColor())
+        })
+        
+        enumerateChildNodes(withName: PenballScene.finishNodeName, using: { node, _ in
+            let id = node.ballID ?? 0
+            let color = node.userData.getColor()
+            
+            let finishNode = SKShapeNode(ellipseOf: CGSize(width: self.radius * 2, height: self.radius * 2))
+            finishNode.position = node.position
+            finishNode.fillColor = .clear
+            finishNode.strokeColor = color
+            finishNode.physicsBody = SKPhysicsBody(circleOfRadius: self.radius + self.lineWidth / 2)
+            finishNode.physicsBody!.categoryBitMask = PenballObjectType.finish.rawValue
+            finishNode.physicsBody!.collisionBitMask = 0
+            finishNode.physicsBody!.isDynamic = false
+            finishNode.userData = [PenballScene.ballKey: id]
+            
+            self.finishNodes[id] = finishNode
+        })
+        finishNodes.values.forEach { addChild($0) }
+        
+        stateDidChange()
+    }
+    
+    func setupBalls() {
+        ballNodes.values.forEach { $0.removeFromParent() }
+        ballNodes = [Int: SKShapeNode](uniqueKeysWithValues: startingConfigurations.map { configuration in
+            let (position, color) = configuration.value
+            let ballNode = SKShapeNode(ellipseOf: CGSize(width: radius * 2, height: radius * 2))
+            ballNode.fillColor = color
+            ballNode.strokeColor = color
+            ballNode.lineWidth = lineWidth
+            ballNode.position = position
+            ballNode.zPosition = PenballScene.ballZ
+            ballNode.userData = [PenballScene.ballKey: configuration.key]
+            return (configuration.key, ballNode)
+        })
+        ballNodes.values.forEach { addChild($0) }
+        completedBalls = []
+    }
+    
+    func stateDidChange() {
+        switch state {
+        case .notStarted:
+            setupBalls()
+        case .started:
+            ballNodes.values.forEach { ballNode in
+                ballNode.physicsBody = SKPhysicsBody(circleOfRadius: radius + lineWidth / 2)
+                ballNode.physicsBody!.categoryBitMask = PenballObjectType.ball.rawValue
+                ballNode.physicsBody!.collisionBitMask = PenballObjectType.obstacles.union(.ball).rawValue
+                ballNode.physicsBody!.contactTestBitMask = PenballObjectType.ballContactTest.rawValue
+            }
+        case .completed:
+            ballNodes.values.forEach { $0.physicsBody = nil }
+        }
+    }
+    
+    public override func update(_ currentTime: TimeInterval) {
+        if ballNodes.values.contains(where: { !$0.frame.intersects(frame) }) {
+            state = .notStarted
+            penballDelegate?.changeState(to: .notStarted)
         }
     }
     
     func getSplitPoints() -> [CGPoint] {
-        var points = [startPosition]
-        circleNode.map { points.append($0.position) }
-        return points
+        return startingConfigurations.values.map(\.0) + ballNodes.values.map(\.position)
     }
     
     func updateStrokes(_ newStrokes: [Double: PKStroke]) {
@@ -52,7 +146,7 @@ class PenballSceneDelegate: SKScene {
         for strokeID in newSet.subtracting(oldSet) {
             strokeNodes[strokeID] = []
             let stroke = newStrokes[strokeID]!
-            let splitY = getSplitPoints().map { frame.height - $0.y }.sorted()
+            let splitY = getSplitPoints().map { frame.maxY - $0.y }.sorted()
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 guard let self = self else { return }
                 
@@ -83,12 +177,15 @@ class PenballSceneDelegate: SKScene {
                         let nodes = zip(rects, bodies).map { item -> SKNode in
                             let (rect, body) = item
                             let node = SKNode()
-                            node.position = CGPoint(x: rect.midX, y: self.frame.height - rect.midY)
+                            node.position = CGPoint(x: self.frame.minX + rect.midX, y: self.frame.maxY - rect.midY)
                             node.physicsBody = body
                             node.physicsBody?.isDynamic = false
+                            node.physicsBody?.categoryBitMask = PenballObjectType.userDrawn.rawValue
+                            node.physicsBody?.collisionBitMask = 0
                             node.physicsBody?.friction = 0
                             return node
                         }
+                        
                         self.strokeNodes[strokeID] = nodes
                         nodes.forEach { self.addChild($0) }
                     }
@@ -96,4 +193,32 @@ class PenballSceneDelegate: SKScene {
             }
         }
     }
+    
+    public func didBegin(_ contact: SKPhysicsContact) {
+        let categories = PenballObjectType(rawValue: contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask)
+        
+        if categories == [.ball, .finish] && contact.bodyA.node!.ballID == contact.bodyB.node!.ballID {
+            let id = contact.bodyA.node!.ballID!
+            let ball = ballNodes[id]!
+            ball.physicsBody?.isDynamic = false
+            let moveAction = SKAction.move(to: finishNodes[id]!.position, duration: 0.1)
+            moveAction.timingMode = .easeOut
+            ball.run(moveAction)
+            completedBalls.insert(id)
+            if !completedBalls.isStrictSubset(of: startingConfigurations.keys) {
+                state = .completed
+                penballDelegate?.changeState(to: .completed)
+            }
+        }
+        
+        if categories == [.ball, .hazard] {
+            // let id = (contact.bodyA.node!.ballID ?? contact.bodyB.node!.ballID)!
+            state = .notStarted
+            penballDelegate?.changeState(to: .notStarted)
+        }
+    }
+}
+
+protocol PenballSceneDelegate: AnyObject {
+    func changeState(to state: PenballState)
 }

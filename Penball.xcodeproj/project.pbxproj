@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A547A27262B637600185F7A /* MyScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4A547A26262B637600185F7A /* MyScene.sks */; };
+		4A5E5636262B3BEF0083CE43 /* PenballState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5E5635262B3BEF0083CE43 /* PenballState.swift */; };
+		4A5E5639262B5E350083CE43 /* PenballObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5E5638262B5E350083CE43 /* PenballObjectType.swift */; };
 		4ACE95D82629358F00A96237 /* PenballApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACE95D72629358F00A96237 /* PenballApp.swift */; };
 		4ACE95DC2629359500A96237 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4ACE95DB2629359500A96237 /* Assets.xcassets */; };
 		4ACE95DF2629359500A96237 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4ACE95DE2629359500A96237 /* Preview Assets.xcassets */; };
@@ -44,6 +47,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4A547A26262B637600185F7A /* MyScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyScene.sks; sourceTree = "<group>"; };
+		4A5E5635262B3BEF0083CE43 /* PenballState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenballState.swift; sourceTree = "<group>"; };
+		4A5E5638262B5E350083CE43 /* PenballObjectType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenballObjectType.swift; sourceTree = "<group>"; };
 		4AC6C89D2629F9EA005DFE5E /* Penball.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Penball.entitlements; sourceTree = "<group>"; };
 		4ACE95D42629358F00A96237 /* Penball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Penball.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ACE95D72629358F00A96237 /* PenballApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenballApp.swift; sourceTree = "<group>"; };
@@ -101,6 +107,7 @@
 			children = (
 				4AC6C89D2629F9EA005DFE5E /* Penball.entitlements */,
 				4ACE95D72629358F00A96237 /* PenballApp.swift */,
+				4A547A26262B637600185F7A /* MyScene.sks */,
 				4ACE95DB2629359500A96237 /* Assets.xcassets */,
 				4ACE95E02629359500A96237 /* Info.plist */,
 				4ACE95DD2629359500A96237 /* Preview Content */,
@@ -121,9 +128,11 @@
 			children = (
 				4ACE95EE2629371600A96237 /* PenballLib.h */,
 				4ACE95FA2629377700A96237 /* PenballView.swift */,
+				4A5E5635262B3BEF0083CE43 /* PenballState.swift */,
 				4ACE9608262946CD00A96237 /* PenballCanvasView.swift */,
 				4ACE96022629454900A96237 /* PenballSpriteView.swift */,
 				4ACE9605262945C200A96237 /* PenballScene.swift */,
+				4A5E5638262B5E350083CE43 /* PenballObjectType.swift */,
 				4ACE95EF2629371600A96237 /* Info.plist */,
 			);
 			path = PenballLib;
@@ -223,6 +232,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4ACE95DF2629359500A96237 /* Preview Assets.xcassets in Resources */,
+				4A547A27262B637600185F7A /* MyScene.sks in Resources */,
 				4ACE95DC2629359500A96237 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -249,9 +259,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A5E5639262B5E350083CE43 /* PenballObjectType.swift in Sources */,
 				4ACE96032629454900A96237 /* PenballSpriteView.swift in Sources */,
 				4ACE95FB2629377700A96237 /* PenballView.swift in Sources */,
 				4ACE9606262945C200A96237 /* PenballScene.swift in Sources */,
+				4A5E5636262B3BEF0083CE43 /* PenballState.swift in Sources */,
 				4ACE9609262946CD00A96237 /* PenballCanvasView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

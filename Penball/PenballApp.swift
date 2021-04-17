@@ -12,7 +12,7 @@ import PenballLib
 struct PenballApp: App {
     var body: some Scene {
         WindowGroup {
-            PenballView()
+            PenballView(scene: PenballScene(fileNamed: "MyScene")!)
         }
     }
 }
