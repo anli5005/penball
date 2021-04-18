@@ -13,6 +13,7 @@ struct PenballObjectType: OptionSet {
     static let finish = PenballObjectType(rawValue: 4)
     static let preloadedObstacle = PenballObjectType(rawValue: 8)
     static let hazard = PenballObjectType(rawValue: 16)
+    static let bouncePad = PenballObjectType(rawValue: 32)
     
     static let obstacles: PenballObjectType = [.userDrawn, .preloadedObstacle]
 }

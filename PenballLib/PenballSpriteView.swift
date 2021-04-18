@@ -16,9 +16,10 @@ struct PenballSpriteView: UIViewRepresentable {
     var strokes: [Double: PKStroke]
     @Binding var state: PenballState
     @Binding var timerText: String
+    var onComplete: (Score) -> Void
     
     func makeCoordinator() -> Coordinator {
-        Coordinator(parent: self)
+        Coordinator(self)
     }
     
     func makeUIView(context: Context) -> SKView {
@@ -61,25 +62,26 @@ struct PenballSpriteView: UIViewRepresentable {
     
     class Coordinator: PenballSceneDelegate {
         var parent: PenballSpriteView
-        let formatter: DateComponentsFormatter
+        var score: Score?
         
-        init(parent: PenballSpriteView) {
+        init(_ parent: PenballSpriteView) {
             self.parent = parent
-            formatter = DateComponentsFormatter()
-            formatter.unitsStyle = .positional
-            formatter.allowedUnits = [.minute, .second]
-            formatter.zeroFormattingBehavior = .pad
         }
         
         func changeState(to state: PenballState) {
             parent.state = state
+            if state == .completed, let score = score {
+                parent.onComplete(score)
+            }
         }
         
-        func updateTimer(elapsedTime: TimeInterval) {
-            let text = formatter.string(from: elapsedTime)!
+        func updateScore(_ score: Score) {
+            let text = score.timeString!
             if parent.timerText != text {
                 parent.timerText = text
             }
+            
+            self.score = score
         }
     }
 }

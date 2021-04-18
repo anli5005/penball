@@ -23,8 +23,12 @@ extension SKNode {
     }
 }
 
+func *(_ mag: CGFloat, _ vec: CGVector) -> CGVector {
+    CGVector(dx: mag * vec.dx, dy: mag * vec.dy)
+}
+
 extension PenballObjectType {
-    static let ballContactTest: PenballObjectType = [.finish, .hazard]
+    static let ballContactTest: PenballObjectType = [.finish, .hazard, .bouncePad]
 }
 
 public class PenballScene: SKScene, SKPhysicsContactDelegate {
@@ -52,6 +56,8 @@ public class PenballScene: SKScene, SKPhysicsContactDelegate {
     var completedBalls = Set<Int>()
     
     var startTime: TimeInterval?
+    
+    var score = Score(time: 0, strokes: 0)
 
     var explosionEmitter: SKEmitterNode?
     var successEmitter: SKEmitterNode?
@@ -99,8 +105,14 @@ public class PenballScene: SKScene, SKPhysicsContactDelegate {
         })
         finishNodes.values.forEach { addChild($0) }
         
-        setupBalls()
         stateDidChange()
+    }
+    
+    public override func didMove(to view: SKView) {
+        super.didMove(to: view)
+        setupBalls()
+        emitters.forEach { $0.removeFromParent() }
+        emitters = []
     }
     
     func setupBalls() {
@@ -123,11 +135,13 @@ public class PenballScene: SKScene, SKPhysicsContactDelegate {
     func stateDidChange() {
         switch state {
         case .notStarted:
+            score = Score(time: 0, strokes: 0)
             startTime = nil
             emitters.forEach { $0.removeFromParent() }
             emitters = []
             setupBalls()
         case .started:
+            score = Score(time: 0, strokes: strokeNodes.count)
             ballNodes.values.forEach { ballNode in
                 ballNode.physicsBody = SKPhysicsBody(circleOfRadius: radius + lineWidth / 2)
                 ballNode.physicsBody!.categoryBitMask = PenballObjectType.ball.rawValue
@@ -152,9 +166,10 @@ public class PenballScene: SKScene, SKPhysicsContactDelegate {
             if startTime == nil {
                 startTime = currentTime
             }
-            penballDelegate?.updateTimer(elapsedTime: currentTime - startTime!)
+            score.time = currentTime - startTime!
+            penballDelegate?.updateScore(score)
         case .notStarted:
-            penballDelegate?.updateTimer(elapsedTime: 0)
+            penballDelegate?.updateScore(score)
         default:
             break
         }
@@ -176,6 +191,7 @@ public class PenballScene: SKScene, SKPhysicsContactDelegate {
         }
         
         for strokeID in newSet.subtracting(oldSet) {
+            score.strokes += 1
             strokeNodes[strokeID] = []
             let stroke = newStrokes[strokeID]!
             let splitY = getSplitPoints().map { frame.maxY - $0.y }.sorted()
@@ -256,7 +272,7 @@ public class PenballScene: SKScene, SKPhysicsContactDelegate {
         if categories == [.ball, .hazard] {
             let id = (contact.bodyA.node!.ballID ?? contact.bodyB.node!.ballID)!
             let ball = ballNodes[id]!
-            ball.physicsBody?.isDynamic = false
+            ball.physicsBody = nil
             ball.lineWidth = 0
             ball.run(.fadeOut(withDuration: 0.2))
             state = .failed
@@ -271,10 +287,18 @@ public class PenballScene: SKScene, SKPhysicsContactDelegate {
             emitter.resetSimulation()
             emitters.append(emitter)
         }
+        
+        if categories == [.ball, .bouncePad] {
+            let id = (contact.bodyA.node!.ballID ?? contact.bodyB.node!.ballID)!
+            let ball = ballNodes[id]!
+            if let velocity = ball.physicsBody?.velocity {
+                ball.physicsBody!.velocity = (-1000 / sqrt(velocity.dx * velocity.dx + velocity.dy * velocity.dy)) * velocity
+            }
+        }
     }
 }
 
 protocol PenballSceneDelegate: AnyObject {
     func changeState(to state: PenballState)
-    func updateTimer(elapsedTime: TimeInterval)
+    func updateScore(_ score: Score)
 }

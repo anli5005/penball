@@ -20,6 +20,10 @@
 		4A91F170262BC505008B8B97 /* PillButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A91F16F262BC505008B8B97 /* PillButtonStyle.swift */; };
 		4A91F174262BC5D0008B8B97 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A91F173262BC5D0008B8B97 /* Level.swift */; };
 		4A91F178262BC8CC008B8B97 /* PenballView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A91F177262BC8CC008B8B97 /* PenballView.swift */; };
+		4A91F17C262BD05B008B8B97 /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A91F17B262BD05B008B8B97 /* Score.swift */; };
+		4A91F17F262BD339008B8B97 /* LevelSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A91F17E262BD339008B8B97 /* LevelSelect.swift */; };
+		4A91F182262BE2B3008B8B97 /* GameControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A91F181262BE2B3008B8B97 /* GameControls.swift */; };
+		4A91F185262BE369008B8B97 /* LevelCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A91F184262BE369008B8B97 /* LevelCompletedView.swift */; };
 		4ACE95D82629358F00A96237 /* PenballApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACE95D72629358F00A96237 /* PenballApp.swift */; };
 		4ACE95DC2629359500A96237 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4ACE95DB2629359500A96237 /* Assets.xcassets */; };
 		4ACE95DF2629359500A96237 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4ACE95DE2629359500A96237 /* Preview Assets.xcassets */; };
@@ -68,6 +72,10 @@
 		4A91F16F262BC505008B8B97 /* PillButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillButtonStyle.swift; sourceTree = "<group>"; };
 		4A91F173262BC5D0008B8B97 /* Level.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		4A91F177262BC8CC008B8B97 /* PenballView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenballView.swift; sourceTree = "<group>"; };
+		4A91F17B262BD05B008B8B97 /* Score.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
+		4A91F17E262BD339008B8B97 /* LevelSelect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSelect.swift; sourceTree = "<group>"; };
+		4A91F181262BE2B3008B8B97 /* GameControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameControls.swift; sourceTree = "<group>"; };
+		4A91F184262BE369008B8B97 /* LevelCompletedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelCompletedView.swift; sourceTree = "<group>"; };
 		4AC6C89D2629F9EA005DFE5E /* Penball.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Penball.entitlements; sourceTree = "<group>"; };
 		4ACE95D42629358F00A96237 /* Penball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Penball.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ACE95D72629358F00A96237 /* PenballApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenballApp.swift; sourceTree = "<group>"; };
@@ -146,8 +154,12 @@
 			children = (
 				4ACE95EE2629371600A96237 /* PenballLib.h */,
 				4A91F177262BC8CC008B8B97 /* PenballView.swift */,
+				4A91F17E262BD339008B8B97 /* LevelSelect.swift */,
 				4ACE95FA2629377700A96237 /* PenballLevelView.swift */,
+				4A91F184262BE369008B8B97 /* LevelCompletedView.swift */,
+				4A91F181262BE2B3008B8B97 /* GameControls.swift */,
 				4A91F173262BC5D0008B8B97 /* Level.swift */,
+				4A91F17B262BD05B008B8B97 /* Score.swift */,
 				4A91F16F262BC505008B8B97 /* PillButtonStyle.swift */,
 				4A547A32262B99AE00185F7A /* HintView.swift */,
 				4A547A35262BA1EC00185F7A /* ClearPopover.swift */,
@@ -293,14 +305,18 @@
 				4A5E5639262B5E350083CE43 /* PenballObjectType.swift in Sources */,
 				4ACE96032629454900A96237 /* PenballSpriteView.swift in Sources */,
 				4ACE95FB2629377700A96237 /* PenballLevelView.swift in Sources */,
+				4A91F17F262BD339008B8B97 /* LevelSelect.swift in Sources */,
 				4ACE9606262945C200A96237 /* PenballScene.swift in Sources */,
 				4A91F170262BC505008B8B97 /* PillButtonStyle.swift in Sources */,
 				4A547A33262B99AE00185F7A /* HintView.swift in Sources */,
+				4A91F185262BE369008B8B97 /* LevelCompletedView.swift in Sources */,
 				4A547A36262BA1EC00185F7A /* ClearPopover.swift in Sources */,
 				4A5E5636262B3BEF0083CE43 /* PenballState.swift in Sources */,
 				4A91F178262BC8CC008B8B97 /* PenballView.swift in Sources */,
 				4A91F174262BC5D0008B8B97 /* Level.swift in Sources */,
 				4ACE9609262946CD00A96237 /* PenballCanvasView.swift in Sources */,
+				4A91F17C262BD05B008B8B97 /* Score.swift in Sources */,
+				4A91F182262BE2B3008B8B97 /* GameControls.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,7 +365,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
