@@ -27,6 +27,7 @@ struct PenballCanvasView: UIViewRepresentable {
         context.coordinator.parent = self
         context.coordinator.canvasView = view
         
+        view.drawing.strokes = [PKStroke](strokes.values)
         view.delegate = context.coordinator
         
         let pencilInteraction = UIPencilInteraction()
@@ -42,6 +43,9 @@ struct PenballCanvasView: UIViewRepresentable {
         
         view.delegate = context.coordinator
         view.tool = tool
+        
+        let strokeSet = Set(strokes.keys)
+        view.drawing.strokes.removeAll(where: { !strokeSet.contains($0.path.creationDate.timeIntervalSince1970) })
         
         if let interaction = view.interactions.first(where: { $0 is UIPencilInteraction }) as? UIPencilInteraction {
             interaction.delegate = context.coordinator
@@ -73,9 +77,12 @@ struct PenballCanvasView: UIViewRepresentable {
                 }
             }
             
-            parent.strokes = [Double: PKStroke](uniqueKeysWithValues: canvasView.drawing.strokes.map { stroke in
+            let strokeDict = [Double: PKStroke](uniqueKeysWithValues: canvasView.drawing.strokes.map { stroke in
                 return (stroke.path.creationDate.timeIntervalSince1970, stroke)
             })
+            if parent.strokes.keys != strokeDict.keys {
+                parent.strokes = strokeDict
+            }
         }
     }
 }

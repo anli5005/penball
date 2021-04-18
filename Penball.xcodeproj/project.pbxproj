@@ -8,15 +8,25 @@
 
 /* Begin PBXBuildFile section */
 		4A547A27262B637600185F7A /* MyScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4A547A26262B637600185F7A /* MyScene.sks */; };
+		4A547A2C262B819700185F7A /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4A547A2A262B819700185F7A /* Explosion.sks */; };
+		4A547A2D262B819700185F7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A547A2B262B819700185F7A /* Assets.xcassets */; };
+		4A547A30262B868500185F7A /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4A547A2A262B819700185F7A /* Explosion.sks */; };
+		4A547A33262B99AE00185F7A /* HintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A547A32262B99AE00185F7A /* HintView.swift */; };
+		4A547A36262BA1EC00185F7A /* ClearPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A547A35262BA1EC00185F7A /* ClearPopover.swift */; };
 		4A5E5636262B3BEF0083CE43 /* PenballState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5E5635262B3BEF0083CE43 /* PenballState.swift */; };
 		4A5E5639262B5E350083CE43 /* PenballObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5E5638262B5E350083CE43 /* PenballObjectType.swift */; };
+		4A91F16B262BABBA008B8B97 /* Success.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4A91F16A262BABBA008B8B97 /* Success.sks */; };
+		4A91F16D262BAC22008B8B97 /* Success.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4A91F16A262BABBA008B8B97 /* Success.sks */; };
+		4A91F170262BC505008B8B97 /* PillButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A91F16F262BC505008B8B97 /* PillButtonStyle.swift */; };
+		4A91F174262BC5D0008B8B97 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A91F173262BC5D0008B8B97 /* Level.swift */; };
+		4A91F178262BC8CC008B8B97 /* PenballView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A91F177262BC8CC008B8B97 /* PenballView.swift */; };
 		4ACE95D82629358F00A96237 /* PenballApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACE95D72629358F00A96237 /* PenballApp.swift */; };
 		4ACE95DC2629359500A96237 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4ACE95DB2629359500A96237 /* Assets.xcassets */; };
 		4ACE95DF2629359500A96237 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4ACE95DE2629359500A96237 /* Preview Assets.xcassets */; };
 		4ACE95F02629371600A96237 /* PenballLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 4ACE95EE2629371600A96237 /* PenballLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4ACE95F32629371600A96237 /* PenballLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ACE95EC2629371600A96237 /* PenballLib.framework */; };
 		4ACE95F42629371600A96237 /* PenballLib.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4ACE95EC2629371600A96237 /* PenballLib.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4ACE95FB2629377700A96237 /* PenballView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACE95FA2629377700A96237 /* PenballView.swift */; };
+		4ACE95FB2629377700A96237 /* PenballLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACE95FA2629377700A96237 /* PenballLevelView.swift */; };
 		4ACE96032629454900A96237 /* PenballSpriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACE96022629454900A96237 /* PenballSpriteView.swift */; };
 		4ACE9606262945C200A96237 /* PenballScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACE9605262945C200A96237 /* PenballScene.swift */; };
 		4ACE9609262946CD00A96237 /* PenballCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACE9608262946CD00A96237 /* PenballCanvasView.swift */; };
@@ -48,8 +58,16 @@
 
 /* Begin PBXFileReference section */
 		4A547A26262B637600185F7A /* MyScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyScene.sks; sourceTree = "<group>"; };
+		4A547A2A262B819700185F7A /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
+		4A547A2B262B819700185F7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4A547A32262B99AE00185F7A /* HintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HintView.swift; sourceTree = "<group>"; };
+		4A547A35262BA1EC00185F7A /* ClearPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearPopover.swift; sourceTree = "<group>"; };
 		4A5E5635262B3BEF0083CE43 /* PenballState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenballState.swift; sourceTree = "<group>"; };
 		4A5E5638262B5E350083CE43 /* PenballObjectType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenballObjectType.swift; sourceTree = "<group>"; };
+		4A91F16A262BABBA008B8B97 /* Success.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Success.sks; sourceTree = "<group>"; };
+		4A91F16F262BC505008B8B97 /* PillButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillButtonStyle.swift; sourceTree = "<group>"; };
+		4A91F173262BC5D0008B8B97 /* Level.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
+		4A91F177262BC8CC008B8B97 /* PenballView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenballView.swift; sourceTree = "<group>"; };
 		4AC6C89D2629F9EA005DFE5E /* Penball.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Penball.entitlements; sourceTree = "<group>"; };
 		4ACE95D42629358F00A96237 /* Penball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Penball.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ACE95D72629358F00A96237 /* PenballApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenballApp.swift; sourceTree = "<group>"; };
@@ -59,7 +77,7 @@
 		4ACE95EC2629371600A96237 /* PenballLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PenballLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ACE95EE2629371600A96237 /* PenballLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PenballLib.h; sourceTree = "<group>"; };
 		4ACE95EF2629371600A96237 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4ACE95FA2629377700A96237 /* PenballView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenballView.swift; sourceTree = "<group>"; };
+		4ACE95FA2629377700A96237 /* PenballLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenballLevelView.swift; sourceTree = "<group>"; };
 		4ACE96022629454900A96237 /* PenballSpriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenballSpriteView.swift; sourceTree = "<group>"; };
 		4ACE9605262945C200A96237 /* PenballScene.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = PenballScene.swift; sourceTree = "<group>"; };
 		4ACE9608262946CD00A96237 /* PenballCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenballCanvasView.swift; sourceTree = "<group>"; };
@@ -127,12 +145,20 @@
 			isa = PBXGroup;
 			children = (
 				4ACE95EE2629371600A96237 /* PenballLib.h */,
-				4ACE95FA2629377700A96237 /* PenballView.swift */,
+				4A91F177262BC8CC008B8B97 /* PenballView.swift */,
+				4ACE95FA2629377700A96237 /* PenballLevelView.swift */,
+				4A91F173262BC5D0008B8B97 /* Level.swift */,
+				4A91F16F262BC505008B8B97 /* PillButtonStyle.swift */,
+				4A547A32262B99AE00185F7A /* HintView.swift */,
+				4A547A35262BA1EC00185F7A /* ClearPopover.swift */,
 				4A5E5635262B3BEF0083CE43 /* PenballState.swift */,
 				4ACE9608262946CD00A96237 /* PenballCanvasView.swift */,
 				4ACE96022629454900A96237 /* PenballSpriteView.swift */,
 				4ACE9605262945C200A96237 /* PenballScene.swift */,
 				4A5E5638262B5E350083CE43 /* PenballObjectType.swift */,
+				4A547A2A262B819700185F7A /* Explosion.sks */,
+				4A91F16A262BABBA008B8B97 /* Success.sks */,
+				4A547A2B262B819700185F7A /* Assets.xcassets */,
 				4ACE95EF2629371600A96237 /* Info.plist */,
 			);
 			path = PenballLib;
@@ -231,7 +257,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A91F16D262BAC22008B8B97 /* Success.sks in Resources */,
 				4ACE95DF2629359500A96237 /* Preview Assets.xcassets in Resources */,
+				4A547A30262B868500185F7A /* Explosion.sks in Resources */,
 				4A547A27262B637600185F7A /* MyScene.sks in Resources */,
 				4ACE95DC2629359500A96237 /* Assets.xcassets in Resources */,
 			);
@@ -241,6 +269,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A547A2D262B819700185F7A /* Assets.xcassets in Resources */,
+				4A91F16B262BABBA008B8B97 /* Success.sks in Resources */,
+				4A547A2C262B819700185F7A /* Explosion.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,9 +292,14 @@
 			files = (
 				4A5E5639262B5E350083CE43 /* PenballObjectType.swift in Sources */,
 				4ACE96032629454900A96237 /* PenballSpriteView.swift in Sources */,
-				4ACE95FB2629377700A96237 /* PenballView.swift in Sources */,
+				4ACE95FB2629377700A96237 /* PenballLevelView.swift in Sources */,
 				4ACE9606262945C200A96237 /* PenballScene.swift in Sources */,
+				4A91F170262BC505008B8B97 /* PillButtonStyle.swift in Sources */,
+				4A547A33262B99AE00185F7A /* HintView.swift in Sources */,
+				4A547A36262BA1EC00185F7A /* ClearPopover.swift in Sources */,
 				4A5E5636262B3BEF0083CE43 /* PenballState.swift in Sources */,
+				4A91F178262BC8CC008B8B97 /* PenballView.swift in Sources */,
+				4A91F174262BC5D0008B8B97 /* Level.swift in Sources */,
 				4ACE9609262946CD00A96237 /* PenballCanvasView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

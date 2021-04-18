@@ -5,8 +5,10 @@
 //  Created by Anthony Li on 4/17/21.
 //
 
-enum PenballState {
+public enum PenballState {
     case notStarted
     case started
+    case failed
     case completed
+    case transitioning
 }

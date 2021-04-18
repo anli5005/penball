@@ -51,6 +51,12 @@ public class PenballScene: SKScene, SKPhysicsContactDelegate {
     var strokeNodes = [Double: [SKNode]]()
     var completedBalls = Set<Int>()
     
+    var startTime: TimeInterval?
+
+    var explosionEmitter: SKEmitterNode?
+    var successEmitter: SKEmitterNode?
+    var emitters = [SKEmitterNode]()
+    
     let radius: CGFloat = 20
     let lineWidth: CGFloat = 5
     
@@ -62,6 +68,14 @@ public class PenballScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
                 
         backgroundColor = .black
+        
+        explosionEmitter = SKEmitterNode(fileNamed: "Explosion")!
+        explosionEmitter!.isPaused = true
+        explosionEmitter!.isHidden = true
+        
+        successEmitter = SKEmitterNode(fileNamed: "Success")!
+        successEmitter!.isPaused = true
+        successEmitter!.isHidden = true
         
         enumerateChildNodes(withName: PenballScene.startNodeName, using: { node, _ in
             self.startingConfigurations[node.ballID ?? 0] = (node.position, node.userData.getColor())
@@ -85,6 +99,7 @@ public class PenballScene: SKScene, SKPhysicsContactDelegate {
         })
         finishNodes.values.forEach { addChild($0) }
         
+        setupBalls()
         stateDidChange()
     }
     
@@ -108,6 +123,9 @@ public class PenballScene: SKScene, SKPhysicsContactDelegate {
     func stateDidChange() {
         switch state {
         case .notStarted:
+            startTime = nil
+            emitters.forEach { $0.removeFromParent() }
+            emitters = []
             setupBalls()
         case .started:
             ballNodes.values.forEach { ballNode in
@@ -118,13 +136,27 @@ public class PenballScene: SKScene, SKPhysicsContactDelegate {
             }
         case .completed:
             ballNodes.values.forEach { $0.physicsBody = nil }
+        default:
+            break
         }
     }
     
     public override func update(_ currentTime: TimeInterval) {
-        if ballNodes.values.contains(where: { !$0.frame.intersects(frame) }) {
-            state = .notStarted
-            penballDelegate?.changeState(to: .notStarted)
+        if state == .started && ballNodes.values.contains(where: { !$0.frame.intersects(frame) }) {
+            state = .failed
+            penballDelegate?.changeState(to: .failed)
+        }
+        
+        switch state {
+        case .started, .failed:
+            if startTime == nil {
+                startTime = currentTime
+            }
+            penballDelegate?.updateTimer(elapsedTime: currentTime - startTime!)
+        case .notStarted:
+            penballDelegate?.updateTimer(elapsedTime: 0)
+        default:
+            break
         }
     }
     
@@ -200,8 +232,9 @@ public class PenballScene: SKScene, SKPhysicsContactDelegate {
         if categories == [.ball, .finish] && contact.bodyA.node!.ballID == contact.bodyB.node!.ballID {
             let id = contact.bodyA.node!.ballID!
             let ball = ballNodes[id]!
+            let finish = finishNodes[id]!
             ball.physicsBody?.isDynamic = false
-            let moveAction = SKAction.move(to: finishNodes[id]!.position, duration: 0.1)
+            let moveAction = SKAction.move(to: finish.position, duration: 0.1)
             moveAction.timingMode = .easeOut
             ball.run(moveAction)
             completedBalls.insert(id)
@@ -209,16 +242,39 @@ public class PenballScene: SKScene, SKPhysicsContactDelegate {
                 state = .completed
                 penballDelegate?.changeState(to: .completed)
             }
+            
+            let emitter = successEmitter!.copy() as! SKEmitterNode
+            emitter.position = .zero
+            emitter.particleColor = startingConfigurations[id]!.1
+            ball.addChild(emitter)
+            emitter.isPaused = false
+            emitter.isHidden = false
+            emitter.resetSimulation()
+            emitters.append(emitter)
         }
         
         if categories == [.ball, .hazard] {
-            // let id = (contact.bodyA.node!.ballID ?? contact.bodyB.node!.ballID)!
-            state = .notStarted
-            penballDelegate?.changeState(to: .notStarted)
+            let id = (contact.bodyA.node!.ballID ?? contact.bodyB.node!.ballID)!
+            let ball = ballNodes[id]!
+            ball.physicsBody?.isDynamic = false
+            ball.lineWidth = 0
+            ball.run(.fadeOut(withDuration: 0.2))
+            state = .failed
+            penballDelegate?.changeState(to: .failed)
+            
+            let emitter = explosionEmitter!.copy() as! SKEmitterNode
+            emitter.position = ball.position
+            emitter.particleColor = startingConfigurations[id]!.1
+            addChild(emitter)
+            emitter.isPaused = false
+            emitter.isHidden = false
+            emitter.resetSimulation()
+            emitters.append(emitter)
         }
     }
 }
 
 protocol PenballSceneDelegate: AnyObject {
     func changeState(to state: PenballState)
+    func updateTimer(elapsedTime: TimeInterval)
 }
