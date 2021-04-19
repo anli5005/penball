@@ -183,6 +183,35 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4A8BE8CF262D35DB000CA633 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4A91F177262BC8CC008B8B97 /* PenballView.swift */,
+				4A91F17E262BD339008B8B97 /* LevelSelect.swift */,
+				4ACE95FA2629377700A96237 /* PenballLevelView.swift */,
+				4A91F184262BE369008B8B97 /* LevelCompletedView.swift */,
+				4A91F181262BE2B3008B8B97 /* GameControls.swift */,
+				4A91F16F262BC505008B8B97 /* PillButtonStyle.swift */,
+				4A547A32262B99AE00185F7A /* HintView.swift */,
+				4A547A35262BA1EC00185F7A /* ClearPopover.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4A8BE8D2262D35F6000CA633 /* Game Logic */ = {
+			isa = PBXGroup;
+			children = (
+				4A91F173262BC5D0008B8B97 /* Level.swift */,
+				4A91F17B262BD05B008B8B97 /* Score.swift */,
+				4A5E5635262B3BEF0083CE43 /* PenballState.swift */,
+				4ACE9608262946CD00A96237 /* PenballCanvasView.swift */,
+				4ACE96022629454900A96237 /* PenballSpriteView.swift */,
+				4ACE9605262945C200A96237 /* PenballScene.swift */,
+				4A5E5638262B5E350083CE43 /* PenballObjectType.swift */,
+			);
+			path = "Game Logic";
+			sourceTree = "<group>";
+		};
 		4ACE95CB2629358F00A96237 = {
 			isa = PBXGroup;
 			children = (
@@ -230,21 +259,8 @@
 			isa = PBXGroup;
 			children = (
 				4ACE95EE2629371600A96237 /* PenballLib.h */,
-				4A91F177262BC8CC008B8B97 /* PenballView.swift */,
-				4A91F17E262BD339008B8B97 /* LevelSelect.swift */,
-				4ACE95FA2629377700A96237 /* PenballLevelView.swift */,
-				4A91F184262BE369008B8B97 /* LevelCompletedView.swift */,
-				4A91F181262BE2B3008B8B97 /* GameControls.swift */,
-				4A91F173262BC5D0008B8B97 /* Level.swift */,
-				4A91F17B262BD05B008B8B97 /* Score.swift */,
-				4A91F16F262BC505008B8B97 /* PillButtonStyle.swift */,
-				4A547A32262B99AE00185F7A /* HintView.swift */,
-				4A547A35262BA1EC00185F7A /* ClearPopover.swift */,
-				4A5E5635262B3BEF0083CE43 /* PenballState.swift */,
-				4ACE9608262946CD00A96237 /* PenballCanvasView.swift */,
-				4ACE96022629454900A96237 /* PenballSpriteView.swift */,
-				4ACE9605262945C200A96237 /* PenballScene.swift */,
-				4A5E5638262B5E350083CE43 /* PenballObjectType.swift */,
+				4A8BE8CF262D35DB000CA633 /* Views */,
+				4A8BE8D2262D35F6000CA633 /* Game Logic */,
 				4A547A2A262B819700185F7A /* Explosion.sks */,
 				4A91F16A262BABBA008B8B97 /* Success.sks */,
 				4A547A2B262B819700185F7A /* Assets.xcassets */,
