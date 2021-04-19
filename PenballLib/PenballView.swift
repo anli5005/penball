@@ -12,7 +12,7 @@ public struct PenballView: View {
     var levels: [Level]
     @Binding var bests: [String: Score]
     @State var currentLevel: Int = 0
-    @State var strokes = [Double: PKStroke]()
+    @State var drawing = PKDrawing()
     @State var state = PenballState.notStarted
     @State var tool: PKTool = PenballCanvasView.defaultTool
     @State var showingLevelSelect = false
@@ -23,7 +23,7 @@ public struct PenballView: View {
     }
     
     func transition(to index: Int) {
-        strokes = [:]
+        drawing = PKDrawing()
         tool = PenballCanvasView.defaultTool
         currentLevel = index
         DispatchQueue.main.asyncAfter(deadline: .now() + PenballSpriteView.transitionTime) {
@@ -33,7 +33,7 @@ public struct PenballView: View {
     
     public var body: some View {
         ZStack(alignment: .topTrailing) {
-            PenballLevelView(levels[currentLevel], strokes: $strokes, tool: $tool, state: $state, bests: $bests, onContinue: currentLevel == levels.endIndex - 1 ? nil : {
+            PenballLevelView(levels[currentLevel], drawing: $drawing, tool: $tool, state: $state, bests: $bests, onContinue: currentLevel == levels.endIndex - 1 ? nil : {
                 transition(to: currentLevel + 1)
             })
             

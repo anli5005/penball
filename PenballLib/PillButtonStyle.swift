@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct PillButtonStyle<Background: View>: ButtonStyle {
+public struct PillButtonStyle<Background: View>: ButtonStyle {
     var background: Background
-    var animatesScale: Bool = true
+    var animatesScale: Bool
     
     struct Content<Background: View>: View {
         var configuration: Configuration
@@ -31,7 +31,12 @@ struct PillButtonStyle<Background: View>: ButtonStyle {
         }
     }
     
-    func makeBody(configuration: Configuration) -> some View {
+    public init(background: Background, animatesScale: Bool = true) {
+        self.background = background
+        self.animatesScale = animatesScale
+    }
+    
+    public func makeBody(configuration: Configuration) -> some View {
         Content(configuration: configuration, background: background).animation(nil).scaleEffect((configuration.isPressed && animatesScale) ? 0.9 : 1).animation(animatesScale ? .easeInOut(duration: 0.1) : nil)
     }
 }

@@ -31,6 +31,34 @@ extension PenballObjectType {
     static let ballContactTest: PenballObjectType = [.finish, .hazard, .bouncePad]
 }
 
+func getPhysicsBodies(strokes: [PKStroke], splitY: [CGFloat]) -> [(CGRect, SKPhysicsBody)] {
+    var drawings = [PKDrawing]()
+    
+    strokes.forEach { stroke in
+        var lastIndex = 0
+        for i in 1..<stroke.path.count {
+            let a = stroke.path[i - 1].location.y
+            let b = stroke.path[i].location.y
+            let range = min(a, b)...max(a, b)
+            if splitY.contains(where: { range.contains($0) }) {
+                let path = PKStrokePath(controlPoints: stroke.path[lastIndex...i], creationDate: stroke.path.creationDate)
+                drawings.append(PKDrawing(strokes: [PKStroke(ink: stroke.ink, path: path)]))
+                lastIndex = i
+            }
+        }
+        if stroke.path.count == 1 || lastIndex != stroke.path.endIndex - 1 {
+            let path = PKStrokePath(controlPoints: stroke.path[lastIndex..<stroke.path.endIndex], creationDate: stroke.path.creationDate)
+            drawings.append(PKDrawing(strokes: [PKStroke(ink: stroke.ink, path: path)]))
+        }
+    }
+    
+    let rects = drawings.map { $0.bounds }
+    let textures = drawings.map { SKTexture(image: $0.image(from: $0.bounds, scale: UIScreen.main.scale)) }
+    let bodies = textures.map { SKPhysicsBody(texture: $0, alphaThreshold: 0.5, size: $0.size()) }
+    
+    return Array(zip(rects, bodies))
+}
+
 public class PenballScene: SKScene, SKPhysicsContactDelegate {
     static let startNodeName = "Start"
     static let finishNodeName = "Finish"
@@ -179,63 +207,45 @@ public class PenballScene: SKScene, SKPhysicsContactDelegate {
         return startingConfigurations.values.map(\.0) + ballNodes.values.map(\.position)
     }
     
-    func updateStrokes(_ newStrokes: [Double: PKStroke]) {
-        let newSet = Set(newStrokes.keys)
+    @discardableResult func addPhysicsBodies(_ bodies: [(CGRect, SKPhysicsBody)], with type: PenballObjectType, frame: CGRect) -> [SKNode] {
+        let nodes = bodies.map { item -> SKNode in
+            let (rect, body) = item
+            let node = SKNode()
+            node.position = CGPoint(x: frame.minX + rect.midX, y: frame.maxY - rect.midY)
+            node.physicsBody = body
+            node.physicsBody?.isDynamic = false
+            node.physicsBody?.categoryBitMask = type.rawValue
+            node.physicsBody?.collisionBitMask = 0
+            node.physicsBody?.friction = 0
+            return node
+        }
+        nodes.forEach { self.addChild($0) }
+        return nodes
+    }
+    
+    func updateDrawing(_ drawing: PKDrawing) {
+        let strokes = [Double: [PKStroke]](grouping: drawing.strokes, by: \.path.creationDate.timeIntervalSince1970)
         let oldSet = Set(strokeNodes.keys)
         
-        for toDelete in oldSet.subtracting(newSet) {
+        for toDelete in oldSet.subtracting(strokes.keys) {
             if let nodes = strokeNodes[toDelete] {
                 nodes.forEach { $0.removeFromParent() }
             }
             strokeNodes[toDelete] = nil
         }
         
-        for strokeID in newSet.subtracting(oldSet) {
+        for strokeID in Set(strokes.keys).subtracting(oldSet) {
             score.strokes += 1
             strokeNodes[strokeID] = []
-            let stroke = newStrokes[strokeID]!
+            let strokes = strokes[strokeID]!
             let splitY = getSplitPoints().map { frame.maxY - $0.y }.sorted()
-            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            DispatchQueue.global(qos: .userInteractive).async { [weak self] in
                 guard let self = self else { return }
-                
-                var drawings = [PKDrawing]()
-                var lastIndex = 0
-                for i in 1..<stroke.path.count {
-                    let a = stroke.path[i - 1].location.y
-                    let b = stroke.path[i].location.y
-                    let range = min(a, b)...max(a, b)
-                    if splitY.contains(where: { range.contains($0) }) {
-                        let path = PKStrokePath(controlPoints: stroke.path[lastIndex...i], creationDate: stroke.path.creationDate)
-                        drawings.append(PKDrawing(strokes: [PKStroke(ink: stroke.ink, path: path)]))
-                        lastIndex = i
-                    }
-                }
-                if stroke.path.count == 1 || lastIndex != stroke.path.endIndex - 1 {
-                    let path = PKStrokePath(controlPoints: stroke.path[lastIndex..<stroke.path.endIndex], creationDate: stroke.path.creationDate)
-                    drawings.append(PKDrawing(strokes: [PKStroke(ink: stroke.ink, path: path)]))
-                }
-                
-                let rects = drawings.map { $0.bounds }
-                let textures = drawings.map { SKTexture(image: $0.image(from: $0.bounds, scale: UIScreen.main.scale)) }
-                let bodies = textures.map { SKPhysicsBody(texture: $0, alphaThreshold: 0.5, size: $0.size()) }
-                
+                let items = getPhysicsBodies(strokes: strokes, splitY: splitY)
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
                     if self.strokeNodes[strokeID] != nil {
-                        let nodes = zip(rects, bodies).map { item -> SKNode in
-                            let (rect, body) = item
-                            let node = SKNode()
-                            node.position = CGPoint(x: self.frame.minX + rect.midX, y: self.frame.maxY - rect.midY)
-                            node.physicsBody = body
-                            node.physicsBody?.isDynamic = false
-                            node.physicsBody?.categoryBitMask = PenballObjectType.userDrawn.rawValue
-                            node.physicsBody?.collisionBitMask = 0
-                            node.physicsBody?.friction = 0
-                            return node
-                        }
-                        
-                        self.strokeNodes[strokeID] = nodes
-                        nodes.forEach { self.addChild($0) }
+                        self.strokeNodes[strokeID] = self.addPhysicsBodies(items, with: .userDrawn, frame: self.frame)
                     }
                 }
             }

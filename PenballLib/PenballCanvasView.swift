@@ -8,18 +8,30 @@
 import SwiftUI
 import PencilKit
 
-struct PenballCanvasView: UIViewRepresentable {
-    @Binding var strokes: [Double: PKStroke]
-    @Binding var tool: PKTool
+public struct PenballCanvasView: UIViewRepresentable {
+    @Binding var drawing: PKDrawing
+    var tool: PKTool
+    var updateStrokeAlpha: Bool
+    var onPencilInteraction: () -> Void
+    var onUpdate: () -> Void
     
-    static let defaultTool = PKInkingTool(.pen, color: .init(white: 1, alpha: 0.7), width: 10)
+    public init(drawing: Binding<PKDrawing>, tool: PKTool, updateStrokeAlpha: Bool = true, onPencilInteraction: @escaping () -> Void = {}, onUpdate: @escaping () -> Void = {}) {
+        _drawing = drawing
+        self.tool = tool
+        self.updateStrokeAlpha = updateStrokeAlpha
+        self.onPencilInteraction = onPencilInteraction
+        self.onUpdate = onUpdate
+    }
     
-    func makeCoordinator() -> Coordinator {
+    public static let defaultTool = PKInkingTool(.pen, color: .init(white: 1, alpha: 0.7), width: 10)
+    
+    public func makeCoordinator() -> Coordinator {
         return Coordinator(parent: self)
     }
     
-    func makeUIView(context: Context) -> PKCanvasView {
+    public func makeUIView(context: Context) -> PKCanvasView {
         let view = PKCanvasView()
+        view.overrideUserInterfaceStyle = .light
         view.backgroundColor = .clear
         view.tool = tool
         view.drawingPolicy = .anyInput
@@ -27,8 +39,10 @@ struct PenballCanvasView: UIViewRepresentable {
         context.coordinator.parent = self
         context.coordinator.canvasView = view
         
-        view.drawing.strokes = [PKStroke](strokes.values)
         view.delegate = context.coordinator
+        context.coordinator.isUndergoingStateUpdate = true
+        view.drawing = drawing
+        context.coordinator.isUndergoingStateUpdate = false
         
         let pencilInteraction = UIPencilInteraction()
         pencilInteraction.delegate = context.coordinator
@@ -37,52 +51,55 @@ struct PenballCanvasView: UIViewRepresentable {
         return view
     }
     
-    func updateUIView(_ view: PKCanvasView, context: Context) {
+    public func updateUIView(_ view: PKCanvasView, context: Context) {
         context.coordinator.parent = self
         context.coordinator.canvasView = view
         
         view.delegate = context.coordinator
         view.tool = tool
-        
-        let strokeSet = Set(strokes.keys)
-        view.drawing.strokes.removeAll(where: { !strokeSet.contains($0.path.creationDate.timeIntervalSince1970) })
+        context.coordinator.isUndergoingStateUpdate = true
+        if view.drawing != drawing {
+            view.drawing = drawing
+        }
+        context.coordinator.isUndergoingStateUpdate = false
         
         if let interaction = view.interactions.first(where: { $0 is UIPencilInteraction }) as? UIPencilInteraction {
             interaction.delegate = context.coordinator
         }
     }
     
-    class Coordinator: NSObject, PKCanvasViewDelegate, UIPencilInteractionDelegate {
+    public class Coordinator: NSObject, PKCanvasViewDelegate, UIPencilInteractionDelegate {
         init(parent: PenballCanvasView) {
             self.parent = parent
         }
         
         var parent: PenballCanvasView
+        var isUndergoingStateUpdate = false
         weak var canvasView: PKCanvasView?
         
-        func pencilInteractionDidTap(_ interaction: UIPencilInteraction) {
-            if parent.tool is PKEraserTool {
-                parent.tool = PenballCanvasView.defaultTool
-            } else {
-                parent.tool = PKEraserTool(.vector)
-            }
+        public func pencilInteractionDidTap(_ interaction: UIPencilInteraction) {
+            parent.onPencilInteraction()
         }
         
-        func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
-            let strokes = canvasView.drawing.strokes
-            if let index = (0..<strokes.count).max(by: { strokes[$0].path.creationDate < strokes[$1].path.creationDate }) {
-                if strokes[index].ink.color.cgColor.alpha != 1 {
-                    canvasView.drawing.strokes[index].ink.color = strokes[index].ink.color.withAlphaComponent(1)
-                    return
-                }
+        public func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
+            if isUndergoingStateUpdate {
+                return
             }
             
-            let strokeDict = [Double: PKStroke](uniqueKeysWithValues: canvasView.drawing.strokes.map { stroke in
-                return (stroke.path.creationDate.timeIntervalSince1970, stroke)
-            })
-            if parent.strokes.keys != strokeDict.keys {
-                parent.strokes = strokeDict
+            if parent.updateStrokeAlpha {
+                var drawing = canvasView.drawing
+                let strokes = drawing.strokes
+                if let index = (0..<strokes.count).max(by: { strokes[$0].path.creationDate < strokes[$1].path.creationDate }) {
+                    if strokes[index].ink.color.cgColor.alpha != 1 {
+                        drawing.strokes[index].ink.color = strokes[index].ink.color.withAlphaComponent(1)
+                    }
+                }
+                parent.drawing = drawing
+            } else {
+                parent.drawing = canvasView.drawing
             }
+            
+            parent.onUpdate()
         }
     }
 }

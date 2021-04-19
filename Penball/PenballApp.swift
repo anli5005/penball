@@ -6,13 +6,9 @@
 //
 
 import SwiftUI
+import PencilKit
 import PenballLib
-
-let levels = [
-    Level(id: "Test1", scene: PenballScene(fileNamed: "MyScene")!),
-    Level(id: "Test2", scene: PenballScene(fileNamed: "MyScene")!),
-    Level(id: "Test3", scene: PenballScene(fileNamed: "MyScene")!, allowsDrawing: false)
-]
+import PenballEditor
 
 @main
 struct PenballApp: App {
@@ -23,10 +19,33 @@ struct PenballApp: App {
     }
 }
 
+let levelJSON = try! Data(contentsOf: Bundle.main.url(forResource: "Level", withExtension: "json")!)
+let levels = [
+    Level(id: "test", name: "Test", from: try! JSONDecoder().decode(LevelDefinition.self, from: levelJSON))
+]
+
+
 struct ContentView: View {
     @State var bests = [String: Score]()
     
+    @State var drawing = PKDrawing()
+    @State var strokeTypes = [Double: PenballEditor.ObjectType]()
+    @State var balls = [PenballEditor.Ball]()
+    
     var body: some View {
-        PenballView(levels: levels, bests: $bests)
+        TabView {
+            PenballView(levels: levels, bests: $bests).tabItem { Text("Levels") }
+            GeometryReader { geometry in
+                ZStack(alignment: .topTrailing) {
+                    PenballEditor(drawing: $drawing, strokeTypes: $strokeTypes, balls: $balls)
+                    Button("Copy JSON") {
+                        let level = LevelDefinition(drawing: drawing, strokeTypes: strokeTypes, balls: balls, sceneHeight: geometry.size.height)
+                        let encoder = JSONEncoder()
+                        let json = try! String(data: encoder.encode(level), encoding: .utf8)!
+                        UIPasteboard.general.string = json
+                    }.buttonStyle(PillButtonStyle(background: Color.primary.opacity(0.2)))
+                }
+            }.tabItem { Text("Editor") }
+        }.statusBar(hidden: true)
     }
 }

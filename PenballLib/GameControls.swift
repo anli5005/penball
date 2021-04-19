@@ -13,7 +13,7 @@ struct GameControls: View {
     var timerText: String
     @Binding var state: PenballState
     @Binding var tool: PKTool
-    @Binding var strokes: [Double: PKStroke]
+    @Binding var drawing: PKDrawing
     @State var showingClearPopover = false
     
     var body: some View {
@@ -60,17 +60,17 @@ struct GameControls: View {
                             Image(systemName: "trash.fill")
                             Text("Clear").fontWeight(.bold)
                         }.foregroundColor(Color.red)
-                    }).buttonStyle(PillButtonStyle(background: Color.white)).disabled(strokes.isEmpty).popover(isPresented: $showingClearPopover, content: {
+                    }).buttonStyle(PillButtonStyle(background: Color.white)).disabled(drawing.strokes.isEmpty).popover(isPresented: $showingClearPopover, content: {
                         ClearPopover {
                             showingClearPopover = false
                         } onClear: {
-                            strokes = [:]
+                            drawing = PKDrawing()
                             tool = PenballCanvasView.defaultTool
                             showingClearPopover = false
                         }
                     })
                 }.frame(maxWidth: .infinity)
             }
-        }.padding(.top, 8).padding(.horizontal, 24).padding(.bottom, 32).frame(alignment: .center).animation(nil).opacity((state == .completed || state == .transitioning) ? 0 : 1).animation(state == .transitioning ? nil : .easeInOut(duration: state == .notStarted ? 0.25 : 0.75))
+        }.padding(.top, 8).padding(.bottom, 16).padding(.horizontal, 24).frame(alignment: .center).animation(nil).opacity((state == .completed || state == .transitioning) ? 0 : 1).animation(state == .transitioning ? nil : .easeInOut(duration: state == .notStarted ? 0.25 : 0.75))
     }
 }

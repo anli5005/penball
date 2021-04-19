@@ -13,7 +13,7 @@ struct PenballSpriteView: UIViewRepresentable {
     static let transitionTime: TimeInterval = 2
     
     var scene: PenballScene
-    var strokes: [Double: PKStroke]
+    var drawing: PKDrawing
     @Binding var state: PenballState
     @Binding var timerText: String
     var onComplete: (Score) -> Void
@@ -24,7 +24,6 @@ struct PenballSpriteView: UIViewRepresentable {
     
     func makeUIView(context: Context) -> SKView {
         let view = SKView()
-        view.preferredFramesPerSecond = 120
         
         context.coordinator.parent = self
         scene.penballDelegate = context.coordinator
@@ -32,10 +31,10 @@ struct PenballSpriteView: UIViewRepresentable {
         
         scene.scaleMode = .resizeFill
         view.presentScene(scene)
-        scene.updateStrokes(strokes)
+        scene.updateDrawing(drawing)
         
         #if DEBUG
-        // view.showsFPS = true
+        view.showsFPS = true
         // view.showsDrawCount = true
         // view.showsNodeCount = true
         // view.showsQuadCount = true
@@ -57,7 +56,7 @@ struct PenballSpriteView: UIViewRepresentable {
             transition.pausesOutgoingScene = false
             uiView.presentScene(scene, transition: transition)
         }
-        scene.updateStrokes(strokes)
+        scene.updateDrawing(drawing)
     }
     
     class Coordinator: PenballSceneDelegate {
