@@ -1,21 +1,25 @@
-//
-//  PenballSpriteView.swift
-//  PenballLib
-//
-//  Created by Anthony Li on 4/16/21.
-//
-
 import SwiftUI
 import SpriteKit
 import PencilKit
 
+// View that encapsulates an SKView containing a PenballScene.
 struct PenballSpriteView: UIViewRepresentable {
+    // Duration of scene transitions.
     static let transitionTime: TimeInterval = 2
     
+    // Current scene in the view.
     var scene: PenballScene
+    
+    // Drawing on the level, used to inform PenballScene of new strokes.
     var drawing: PKDrawing
+    
+    // Binding to the current state of the level.
     @Binding var state: PenballState
+    
+    // Binding to the text displayed in the reset button.
     @Binding var timerText: String
+    
+    // Function called when the level completes. This function is passed the current score.
     var onComplete: (Score) -> Void
     
     func makeCoordinator() -> Coordinator {
@@ -35,11 +39,6 @@ struct PenballSpriteView: UIViewRepresentable {
         
         #if DEBUG
         view.showsFPS = true
-        // view.showsDrawCount = true
-        // view.showsNodeCount = true
-        // view.showsQuadCount = true
-        // view.showsPhysics = true
-        // view.showsFields = true
         #endif
         
         return view
@@ -50,6 +49,7 @@ struct PenballSpriteView: UIViewRepresentable {
         scene.penballDelegate = context.coordinator
         scene.state = state
 
+        // If the scene was updated, transition to it.
         if uiView.scene !== scene {
             scene.scaleMode = .resizeFill
             let transition = SKTransition.push(with: .up, duration: Self.transitionTime)
@@ -61,6 +61,8 @@ struct PenballSpriteView: UIViewRepresentable {
     
     class Coordinator: PenballSceneDelegate {
         var parent: PenballSpriteView
+        
+        // Keeps track of the current score to call onComplete with.
         var score: Score?
         
         init(_ parent: PenballSpriteView) {

@@ -21,7 +21,8 @@ struct PenballApp: App {
 
 let levelJSON = try! Data(contentsOf: Bundle.main.url(forResource: "Level", withExtension: "json")!)
 let levels = [
-    Level(id: "test", name: "Test", from: try! JSONDecoder().decode(LevelDefinition.self, from: levelJSON))
+    Level(id: "test", name: "Test", from: try! JSONDecoder().decode(LevelDefinition.self, from: levelJSON)),
+    Level(id: "test2", name: "Test", from: try! JSONDecoder().decode(LevelDefinition.self, from: levelJSON))
 ]
 
 

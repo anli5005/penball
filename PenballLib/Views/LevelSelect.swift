@@ -1,20 +1,19 @@
-//
-//  LevelSelect.swift
-//  PenballLib
-//
-//  Created by Anthony Li on 4/17/21.
-//
-
 import SwiftUI
 #if DEBUG
 import SpriteKit
 #endif
 
+// Level selector, displayed in a popover.
 struct LevelSelect: View {
+    // Parameters from PenballView.
     var levels: [Level]
     var bests: [String: Score]
     var currentLevel: Int
+    
+    // Function called when a level is selected.
     var levelSelected: (Int) -> Void
+    
+    // Index of the first uncompleted level.
     var nextLevel: Int
     
     init(levels: [Level], bests: [String: Score], currentLevel: Int, levelSelected: @escaping (Int) -> Void) {
@@ -26,10 +25,12 @@ struct LevelSelect: View {
         self.nextLevel = levels.firstIndex(where: { bests[$0.id] == nil }) ?? levels.endIndex
     }
     
+    // Fetches the best scores for a level of a given index.
     func bests(for index: Int) -> Score? {
         bests[levels[index].id]
     }
     
+    // Computes the background color to use when drawing a level with a given index.
     func backgroundColor(for index: Int) -> Color {
         if bests(for: index) != nil {
             return Color.green
@@ -40,6 +41,7 @@ struct LevelSelect: View {
         }
     }
     
+    // Computes the foreground color to use when drawing a level with a given index.
     func foregroundColor(for index: Int) -> Color {
         if bests(for: index) != nil {
             return Color.white
@@ -62,6 +64,7 @@ struct LevelSelect: View {
                             }
                         } label: {
                             VStack(spacing: 2) {
+                                // Circle with level number
                                 ZStack {
                                     Circle().size(CGSize(width: 60, height: 60)).fill(backgroundColor(for: index))
                                     if index == currentLevel {
@@ -69,7 +72,11 @@ struct LevelSelect: View {
                                     }
                                     Text("\(index + 1)").bold().font(.title2).foregroundColor(foregroundColor(for: index))
                                 }.frame(width: 60, height: 60)
+                                
+                                // Level name
                                 Text(levels[index].name).font(.caption).multilineTextAlignment(.center).foregroundColor(Color.primary)
+                                
+                                // Best scores, if any
                                 if let bests = bests(for: index) {
                                     Text("\(bests.timeString!) • \(bests.strokes)").font(.caption2).multilineTextAlignment(.center).foregroundColor(Color.primary).opacity(0.8)
                                 }

@@ -1,14 +1,8 @@
-//
-//  EditorUtils.swift
-//  PenballEditor
-//
-//  Created by Anthony Li on 4/18/21.
-//
-
 import PenballLib
 import PencilKit
 
 public extension LevelDefinition {
+    // Initializes a level definition from the corresponding PenballEditor data types. Used when exporting a level from the editor.
     init(drawing: PKDrawing, strokeTypes: [Double: PenballEditor.ObjectType], balls: [PenballEditor.Ball], sceneHeight: CGFloat) {
         self.init(drawing: drawing, strokeTypes: Dictionary(uniqueKeysWithValues: strokeTypes.compactMap { entry in
             entry.value.category.map { (entry.key, $0) }

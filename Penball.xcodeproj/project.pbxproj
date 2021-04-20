@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A1BB98E262E439100D6919B /* hint.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4A1BB98D262E439100D6919B /* hint.wav */; };
 		4A547A27262B637600185F7A /* MyScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4A547A26262B637600185F7A /* MyScene.sks */; };
 		4A547A2C262B819700185F7A /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4A547A2A262B819700185F7A /* Explosion.sks */; };
 		4A547A2D262B819700185F7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A547A2B262B819700185F7A /* Assets.xcassets */; };
@@ -25,6 +26,7 @@
 		4A8BE8C2262D1DA3000CA633 /* EditorTapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8BE8C1262D1DA3000CA633 /* EditorTapView.swift */; };
 		4A8BE8C5262D2106000CA633 /* EditorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8BE8C4262D2106000CA633 /* EditorUtils.swift */; };
 		4A8BE8C8262D2415000CA633 /* Level.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A8BE8C7262D2415000CA633 /* Level.json */; };
+		4A8BE8F4262D53A7000CA633 /* level6.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A8BE8F3262D53A7000CA633 /* level6.json */; };
 		4A91F16B262BABBA008B8B97 /* Success.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4A91F16A262BABBA008B8B97 /* Success.sks */; };
 		4A91F16D262BAC22008B8B97 /* Success.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4A91F16A262BABBA008B8B97 /* Success.sks */; };
 		4A91F170262BC505008B8B97 /* PillButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A91F16F262BC505008B8B97 /* PillButtonStyle.swift */; };
@@ -97,6 +99,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4A1BB98D262E439100D6919B /* hint.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hint.wav; sourceTree = "<group>"; };
 		4A547A26262B637600185F7A /* MyScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyScene.sks; sourceTree = "<group>"; };
 		4A547A2A262B819700185F7A /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
 		4A547A2B262B819700185F7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -112,6 +115,7 @@
 		4A8BE8C1262D1DA3000CA633 /* EditorTapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorTapView.swift; sourceTree = "<group>"; };
 		4A8BE8C4262D2106000CA633 /* EditorUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorUtils.swift; sourceTree = "<group>"; };
 		4A8BE8C7262D2415000CA633 /* Level.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Level.json; sourceTree = "<group>"; };
+		4A8BE8F3262D53A7000CA633 /* level6.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level6.json; sourceTree = "<group>"; };
 		4A91F16A262BABBA008B8B97 /* Success.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Success.sks; sourceTree = "<group>"; };
 		4A91F16F262BC505008B8B97 /* PillButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillButtonStyle.swift; sourceTree = "<group>"; };
 		4A91F173262BC5D0008B8B97 /* Level.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
@@ -194,6 +198,8 @@
 				4A91F16F262BC505008B8B97 /* PillButtonStyle.swift */,
 				4A547A32262B99AE00185F7A /* HintView.swift */,
 				4A547A35262BA1EC00185F7A /* ClearPopover.swift */,
+				4ACE9608262946CD00A96237 /* PenballCanvasView.swift */,
+				4ACE96022629454900A96237 /* PenballSpriteView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -204,10 +210,8 @@
 				4A91F173262BC5D0008B8B97 /* Level.swift */,
 				4A91F17B262BD05B008B8B97 /* Score.swift */,
 				4A5E5635262B3BEF0083CE43 /* PenballState.swift */,
-				4ACE9608262946CD00A96237 /* PenballCanvasView.swift */,
-				4ACE96022629454900A96237 /* PenballSpriteView.swift */,
-				4ACE9605262945C200A96237 /* PenballScene.swift */,
 				4A5E5638262B5E350083CE43 /* PenballObjectType.swift */,
+				4ACE9605262945C200A96237 /* PenballScene.swift */,
 			);
 			path = "Game Logic";
 			sourceTree = "<group>";
@@ -240,6 +244,8 @@
 				4ACE95D72629358F00A96237 /* PenballApp.swift */,
 				4A547A26262B637600185F7A /* MyScene.sks */,
 				4A8BE8C7262D2415000CA633 /* Level.json */,
+				4A8BE8F3262D53A7000CA633 /* level6.json */,
+				4A1BB98D262E439100D6919B /* hint.wav */,
 				4ACE95DB2629359500A96237 /* Assets.xcassets */,
 				4ACE95E02629359500A96237 /* Info.plist */,
 				4ACE95DD2629359500A96237 /* Preview Content */,
@@ -404,8 +410,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A91F16D262BAC22008B8B97 /* Success.sks in Resources */,
+				4A8BE8F4262D53A7000CA633 /* level6.json in Resources */,
 				4ACE95DF2629359500A96237 /* Preview Assets.xcassets in Resources */,
 				4A8BE8C8262D2415000CA633 /* Level.json in Resources */,
+				4A1BB98E262E439100D6919B /* hint.wav in Resources */,
 				4A547A30262B868500185F7A /* Explosion.sks in Resources */,
 				4A547A27262B637600185F7A /* MyScene.sks in Resources */,
 				4ACE95DC2629359500A96237 /* Assets.xcassets in Resources */,

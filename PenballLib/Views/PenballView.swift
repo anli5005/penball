@@ -1,20 +1,22 @@
-//
-//  PenballView.swift
-//  PenballLib
-//
-//  Created by Anthony Li on 4/17/21.
-//
-
 import SwiftUI
 import PencilKit
 
+// View that manages the Penball game.
 public struct PenballView: View {
+    // Array of levels to display.
     var levels: [Level]
+    
+    // Mapping of level IDs to best scores.
     @Binding var bests: [String: Score]
+    
+    // Index of the current level.
     @State var currentLevel: Int = 0
+    
+    // Parameters for the current level.
     @State var drawing = PKDrawing()
     @State var state = PenballState.notStarted
     @State var tool: PKTool = PenballCanvasView.defaultTool
+    
     @State var showingLevelSelect = false
     
     public init(levels: [Level], bests: Binding<[String: Score]>) {
@@ -22,6 +24,7 @@ public struct PenballView: View {
         self._bests = bests
     }
     
+    // Transitions to the level with a given index.
     func transition(to index: Int) {
         drawing = PKDrawing()
         tool = PenballCanvasView.defaultTool

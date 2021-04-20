@@ -1,13 +1,7 @@
-//
-//  EditorTapView.swift
-//  PenballEditor
-//
-//  Created by Anthony Li on 4/18/21.
-//
-
 import SwiftUI
 import UIKit
 
+// View that captures taps and reports their location.
 struct EditorTapView: UIViewRepresentable {
     class TapViewContent: UIView {
         weak var coordinator: Coordinator?
@@ -28,6 +22,7 @@ struct EditorTapView: UIViewRepresentable {
         }
     }
     
+    // Called with the location of a tap when a tap occurs.
     let onUpdate: (CGPoint) -> Void
     
     func makeUIView(context: Context) -> TapViewContent {

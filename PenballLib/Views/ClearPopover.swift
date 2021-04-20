@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Popover that confirms whether the user wants to clear the drawing.
 struct ClearPopover: View {
     var onCancel: () -> Void
     var onClear: () -> Void

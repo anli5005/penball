@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// View that appears when the level is failed, to provide a hint to the user that they should press the Reset button.
 struct HintView: View {
     var content: String
     var secondaryContent: String? = nil

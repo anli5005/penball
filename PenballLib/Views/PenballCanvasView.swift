@@ -1,18 +1,21 @@
-//
-//  PenballCanvasView.swift
-//  PenballLib
-//
-//  Created by Anthony Li on 4/16/21.
-//
-
 import SwiftUI
 import PencilKit
 
+// View that encapsulates a PencilKit canvas.
 public struct PenballCanvasView: UIViewRepresentable {
+    // Binding to the drawing on the canvas.
     @Binding var drawing: PKDrawing
+    
+    // Current tool.
     var tool: PKTool
+    
+    // Whether the canvas sets the opacity of each completed stroke to 1.
     var updateStrokeAlpha: Bool
+    
+    // Function called when a 2nd-generation Apple Pencil is double-tapped.
     var onPencilInteraction: () -> Void
+    
+    // Function called when the drawing updates.
     var onUpdate: () -> Void
     
     public init(drawing: Binding<PKDrawing>, tool: PKTool, updateStrokeAlpha: Bool = true, onPencilInteraction: @escaping () -> Void = {}, onUpdate: @escaping () -> Void = {}) {
@@ -23,6 +26,7 @@ public struct PenballCanvasView: UIViewRepresentable {
         self.onUpdate = onUpdate
     }
     
+    // Default tool (the pen) for drawing obstacles.
     public static let defaultTool = PKInkingTool(.pen, color: .init(white: 1, alpha: 0.7), width: 10)
     
     public func makeCoordinator() -> Coordinator {
@@ -87,6 +91,7 @@ public struct PenballCanvasView: UIViewRepresentable {
             }
             
             if parent.updateStrokeAlpha {
+                // Set the opacity of the latest stroke to 100%.
                 var drawing = canvasView.drawing
                 let strokes = drawing.strokes
                 if let index = (0..<strokes.count).max(by: { strokes[$0].path.creationDate < strokes[$1].path.creationDate }) {

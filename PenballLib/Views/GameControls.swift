@@ -8,16 +8,28 @@
 import SwiftUI
 import PencilKit
 
+// View displaying the controls for the game.
 struct GameControls: View {
+    // Current level.
     var level: Level
+    
+    // Text drawn on the reset button, displaying the time elapsed after the level starts.
     var timerText: String
+    
+    // Binding to the state of the level.
     @Binding var state: PenballState
+    
+    // Binding to the current tool.
     @Binding var tool: PKTool
+    
+    // Binding to the drawing on the level.
     @Binding var drawing: PKDrawing
+    
     @State var showingClearPopover = false
     
     var body: some View {
         HStack {
+            // Pen/Eraser
             if level.allowsDrawing {
                 HStack {
                     Button(action: {
@@ -33,6 +45,8 @@ struct GameControls: View {
                     Spacer()
                 }.frame(maxWidth: .infinity)
             }
+            
+            // Start/Reset
             HStack {
                 Button(action: {
                     state = (state == .notStarted) ? .started : .notStarted
@@ -50,6 +64,8 @@ struct GameControls: View {
                     }
                 }).buttonStyle(PillButtonStyle(background: state == .notStarted ? Color.green : Color.blue)).disabled(state == .completed)
             }.frame(maxWidth: .infinity)
+            
+            // Clear
             if level.allowsDrawing {
                 HStack {
                     Spacer()

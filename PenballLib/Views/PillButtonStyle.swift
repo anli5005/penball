@@ -7,8 +7,12 @@
 
 import SwiftUI
 
+// Button style used throughout Penball.
 public struct PillButtonStyle<Background: View>: ButtonStyle {
+    // Background of the button.
     var background: Background
+    
+    // Whether the size of the button animates when pressed. Used in ClearPopover.
     var animatesScale: Bool
     
     struct Content<Background: View>: View {

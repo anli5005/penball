@@ -1,12 +1,6 @@
-//
-//  PenballEditorBallView.swift
-//  PenballEditor
-//
-//  Created by Anthony Li on 4/18/21.
-//
-
 import SwiftUI
 
+// View that displays a ball or its goal in the level editor.
 struct EditorBallView: View {
     enum Style {
         case filled
@@ -19,7 +13,7 @@ struct EditorBallView: View {
     var onTapGesture: () -> Void
     
     var shape: AnyView {
-        let circle = Circle().size(CGSize(width: 44, height: 44))
+        let circle = Circle().size(CGSize(width: 40, height: 40))
         switch style {
         case .filled:
             return AnyView(circle.fill(color))

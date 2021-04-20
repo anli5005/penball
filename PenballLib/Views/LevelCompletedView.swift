@@ -7,11 +7,21 @@
 
 import SwiftUI
 
+// View that appears when a level is completed.
 struct LevelCompletedView: View {
+    // Current level.
     var level: Level
+    
+    // Best score for this level.
     var bests: Score
+    
+    // Current score for this level.
     var currentScore: Score
+    
+    // Function called when the continue button is pressed. If nil, the continue button will not be shown.
     var onContinue: (() -> Void)?
+    
+    // Binding to the current state of the level.
     @Binding var state: PenballState
     
     var body: some View {
@@ -21,6 +31,8 @@ struct LevelCompletedView: View {
         return HStack {
             VStack(alignment: .leading) {
                 Text("Level complete!").bold().font(.largeTitle)
+                
+                // Scores
                 if level.allowsDrawing {
                     HStack(spacing: 8) {
                         Text("Time: \(currentScore.timeString!)")
@@ -32,15 +44,19 @@ struct LevelCompletedView: View {
                     }
                 }
             }.foregroundColor(.white)
+            
             Spacer()
+            
+            // Retry
             Button {
                 state = .notStarted
             } label: {
                 HStack {
-                    Image(systemName: "arrow.clockwise")
-                    Text("Retry").fontWeight(.bold)
+                    Image(systemName: "arrow.clockwise").accessibilityLabel("Retry")
                 }.padding().foregroundColor(Color.black)
             }.buttonStyle(PillButtonStyle(background: Color.white))
+            
+            // Continue
             if let onContinue = onContinue {
                 Button {
                     state = .transitioning
@@ -49,8 +65,7 @@ struct LevelCompletedView: View {
                     }
                 } label: {
                     HStack {
-                        Text("Continue").fontWeight(.bold)
-                        Image(systemName: "arrow.right")
+                        Image(systemName: "arrow.right").accessibilityLabel("Continue")
                     }.padding().foregroundColor(Color.white)
                 }.buttonStyle(PillButtonStyle(background: Color.green))
             }
